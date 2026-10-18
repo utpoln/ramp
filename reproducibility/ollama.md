@@ -44,7 +44,7 @@ on this.
    above — not all models used in this study have one).
 3. **Start the local inference service** (`ollama serve`, or the
    equivalent for your installation).
-4. **Configure the RAGO runner to use the local endpoint.** The
+4. **Configure the RAMP runner to use the local endpoint.** The
    scripts in this repository (e.g.
    `external_validation/run_external_model.py`,
    `scripts/llm_prompting_heldout.py`) already support an

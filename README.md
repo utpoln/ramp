@@ -1,4 +1,4 @@
-# RAGO: A Frozen Multi-Signal Reliability Framework for Prioritizing LLM-Generated Gene Ontology Annotations
+# RAMP: A Frozen Multi-Signal Reliability Framework for Prioritizing LLM-Generated Gene Ontology Annotations
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -39,7 +39,7 @@ The reliability score combines three signals already observable at inference tim
 ## Repository Structure
 
 ```
-RAGO/
+ramp/
 ├── FROZEN_PROTOCOL.md                  # Full frozen protocol (timestamped, pre-registered-in-spirit)
 ├── frozen_experiment_config.json       # Machine-readable frozen config + file hashes
 │

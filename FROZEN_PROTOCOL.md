@@ -1,4 +1,4 @@
-# RAGO Reliability Framework — Frozen Held-Out Validation Protocol
+# RAMP Reliability Framework — Frozen Held-Out Validation Protocol
 
 **Status: PRE-REGISTERED. Frozen before any held-out LLM call.**
 **Date frozen:** 2026-10-05 (prior to sample draw completion / first LLM call)
@@ -45,7 +45,7 @@ max_prompt_consistency = max over the 5 models of (number of the 4
 
 rago_support            = 1 if go_id appears in the BLAST-retrieved
                           candidate list for this (accession, namespace)
-                          per the frozen RAGO retrieval pipeline
+                          per the frozen RAMP retrieval pipeline
                           (Sec. 6); else 0.
 
 combined_score          = n_models + max_prompt_consistency + 5*rago_support
@@ -83,7 +83,7 @@ Within one protein-cluster-bootstrap replicate:
 
 A claim is correct iff `go_id` appears in that protein's own
 experimentally-annotated GO set for that namespace, using the same
-evidence-code filter as PROBE/ADAPT/RAGO throughout: `{IDA, IMP, IPI,
+evidence-code filter as PROBE/ADAPT/RAMP throughout: `{IDA, IMP, IPI,
 IGI, IEP, EXP, HDA, HMP, HGI, HEP}`. Ground truth for held-out proteins
 is taken from their UniProt record **at the time of the held-out draw**
 (the same snapshot used to determine qualification), not from any later
