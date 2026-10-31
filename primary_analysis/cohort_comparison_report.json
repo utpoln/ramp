@@ -1,0 +1,39 @@
+{
+  "n_proteins": {
+    "heldout": 243,
+    "development": 1000
+  },
+  "sequence_length": {
+    "heldout_mean": 523.0452674897119,
+    "development_mean": 525.379,
+    "cohens_d": -0.004753217037545618,
+    "mann_whitney_p": 0.3480776119416722
+  },
+  "total_exp_go_terms": {
+    "heldout_mean": 3.8395061728395063,
+    "development_mean": 7.673,
+    "cohens_d": -0.6450168888520081,
+    "cohens_d_excluding_ecoli": -0.6458489395060474
+  },
+  "namespaces": {
+    "MF": {
+      "heldout_presence_pct": 53.49794238683128,
+      "development_presence_pct": 68.0,
+      "cohens_d_term_counts": -0.45885236881363733
+    },
+    "BP": {
+      "heldout_presence_pct": 67.07818930041152,
+      "development_presence_pct": 93.8,
+      "cohens_d_term_counts": -0.6227231399353912
+    },
+    "CC": {
+      "heldout_presence_pct": 88.47736625514403,
+      "development_presence_pct": 75.8,
+      "cohens_d_term_counts": -0.08758285923008206
+    }
+  },
+  "pct_at_three_term_floor": {
+    "heldout": 62.96296296296296,
+    "development": 19.8
+  }
+}

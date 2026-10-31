@@ -1,0 +1,358 @@
+{
+  "inputs": {
+    "n_proteins": 243,
+    "models": [
+      "google/gemma-4-31b",
+      "mistral-large:123b",
+      "mistral:7b",
+      "mixtral:8x7b",
+      "qwen2.5:72b"
+    ],
+    "n_successful_calls": 14580,
+    "n_claims": 60585
+  },
+  "primary": {
+    "threshold": 4,
+    "n_selected": 7431,
+    "n_correct": 355,
+    "precision": 0.047772843493473285,
+    "coverage": 0.12265412230750186,
+    "bootstrap": {
+      "B": 2000,
+      "seed": 42,
+      "n_proteins": 243,
+      "precision_at_10_ci": [
+        0.04354720002959972,
+        0.05213316928930603
+      ],
+      "baseline_ci": [
+        0.006364949542978079,
+        0.007593045352673696
+      ],
+      "paired_difference_ci": [
+        0.03707772990519354,
+        0.04465087549244406
+      ]
+    }
+  },
+  "baseline": {
+    "n_correct": 423,
+    "n_claims": 60585,
+    "precision": 0.006981926219361228
+  },
+  "by_score": [
+    {
+      "score": 2,
+      "claims": 45512,
+      "correct": 43,
+      "precision": 0.0009448057655123924,
+      "cum_claims": 60585,
+      "cum_precision": 0.006981926219361228
+    },
+    {
+      "score": 3,
+      "claims": 7642,
+      "correct": 25,
+      "precision": 0.00327139492279508,
+      "cum_claims": 15073,
+      "cum_precision": 0.025210641544483513
+    },
+    {
+      "score": 4,
+      "claims": 3106,
+      "correct": 21,
+      "precision": 0.006761107533805538,
+      "cum_claims": 7431,
+      "cum_precision": 0.047772843493473285
+    },
+    {
+      "score": 5,
+      "claims": 1494,
+      "correct": 22,
+      "precision": 0.014725568942436412,
+      "cum_claims": 4325,
+      "cum_precision": 0.07722543352601156
+    },
+    {
+      "score": 6,
+      "claims": 734,
+      "correct": 27,
+      "precision": 0.03678474114441417,
+      "cum_claims": 2831,
+      "cum_precision": 0.11020840692334864
+    },
+    {
+      "score": 7,
+      "claims": 742,
+      "correct": 53,
+      "precision": 0.07142857142857142,
+      "cum_claims": 2097,
+      "cum_precision": 0.13590844062947066
+    },
+    {
+      "score": 8,
+      "claims": 457,
+      "correct": 42,
+      "precision": 0.09190371991247265,
+      "cum_claims": 1355,
+      "cum_precision": 0.17121771217712178
+    },
+    {
+      "score": 9,
+      "claims": 358,
+      "correct": 64,
+      "precision": 0.1787709497206704,
+      "cum_claims": 898,
+      "cum_precision": 0.21158129175946547
+    },
+    {
+      "score": 10,
+      "claims": 105,
+      "correct": 12,
+      "precision": 0.11428571428571428,
+      "cum_claims": 540,
+      "cum_precision": 0.23333333333333334
+    },
+    {
+      "score": 11,
+      "claims": 85,
+      "correct": 13,
+      "precision": 0.15294117647058825,
+      "cum_claims": 435,
+      "cum_precision": 0.2620689655172414
+    },
+    {
+      "score": 12,
+      "claims": 111,
+      "correct": 27,
+      "precision": 0.24324324324324326,
+      "cum_claims": 350,
+      "cum_precision": 0.2885714285714286
+    },
+    {
+      "score": 13,
+      "claims": 111,
+      "correct": 25,
+      "precision": 0.22522522522522523,
+      "cum_claims": 239,
+      "cum_precision": 0.30962343096234307
+    },
+    {
+      "score": 14,
+      "claims": 128,
+      "correct": 49,
+      "precision": 0.3828125,
+      "cum_claims": 128,
+      "cum_precision": 0.3828125
+    }
+  ],
+  "by_organism": {
+    "ecoli": {
+      "threshold": 4,
+      "n_selected": 1382,
+      "n_correct": 59,
+      "precision": 0.0426917510853835,
+      "coverage": 0.11232119635890767,
+      "baseline": 0.005689206762028608
+    },
+    "human": {
+      "threshold": 4,
+      "n_selected": 2102,
+      "n_correct": 111,
+      "precision": 0.05280685061845861,
+      "coverage": 0.12477739522735368,
+      "baseline": 0.007835687997150658
+    },
+    "mouse": {
+      "threshold": 4,
+      "n_selected": 2091,
+      "n_correct": 99,
+      "precision": 0.047345767575322814,
+      "coverage": 0.11570385126162018,
+      "baseline": 0.006584772023019035
+    },
+    "yeast": {
+      "threshold": 4,
+      "n_selected": 1856,
+      "n_correct": 86,
+      "precision": 0.04633620689655173,
+      "coverage": 0.13889096759709646,
+      "baseline": 0.007633016538202499
+    }
+  },
+  "by_namespace": {
+    "molecular_function": {
+      "threshold": 4,
+      "n_selected": 2098,
+      "n_correct": 38,
+      "precision": 0.01811248808388942,
+      "coverage": 0.11871215979177276,
+      "baseline": 0.002546257002206756
+    },
+    "biological_process": {
+      "threshold": 4,
+      "n_selected": 3086,
+      "n_correct": 47,
+      "precision": 0.0152300712896954,
+      "coverage": 0.11201045334107655,
+      "baseline": 0.002758520561867083
+    },
+    "cellular_component": {
+      "threshold": 4,
+      "n_selected": 2247,
+      "n_correct": 270,
+      "precision": 0.12016021361815754,
+      "coverage": 0.146279539092507,
+      "baseline": 0.01966017837380379
+    }
+  },
+  "concentration": {
+    "proteins_with_correct": 198,
+    "max_correct_per_protein": 6,
+    "gini_correct": 0.3895902161942851,
+    "gini_selected": 0.15880642376253853
+  },
+  "exact_coverage_tiebreak_sensitivity": {
+    "n_selected": 6059,
+    "n_correct": 348,
+    "precision": 0.05743522033338835,
+    "tie_order": "lexicographic (accession, full namespace name, GO ID)"
+  },
+  "ablations": {
+    "n_models": {
+      "threshold": 2,
+      "n_selected": 6647,
+      "n_correct": 326,
+      "precision": 0.049044681811343464,
+      "coverage": 0.10971362548485598
+    },
+    "max_prompt_consistency": {
+      "threshold": 2,
+      "n_selected": 12706,
+      "n_correct": 337,
+      "precision": 0.026522902565716985,
+      "coverage": 0.20972187835272757
+    },
+    "n_models+max_prompt_consistency": {
+      "threshold": 4,
+      "n_selected": 7032,
+      "n_correct": 322,
+      "precision": 0.04579067121729238,
+      "coverage": 0.11606833374597672
+    },
+    "n_models+rago_support": {
+      "threshold": 2,
+      "n_selected": 7037,
+      "n_correct": 358,
+      "precision": 0.050873951968168254,
+      "coverage": 0.11615086242469258
+    },
+    "max_prompt_consistency+rago_support": {
+      "threshold": 2,
+      "n_selected": 13033,
+      "n_correct": 367,
+      "precision": 0.028159287961328935,
+      "coverage": 0.2151192539407444
+    },
+    "full_combined_score": {
+      "threshold": 4,
+      "n_selected": 7431,
+      "n_correct": 355,
+      "precision": 0.047772843493473285,
+      "coverage": 0.12265412230750186
+    }
+  },
+  "leave_one_model_out": {
+    "google/gemma-4-31b": {
+      "threshold": 4,
+      "n_selected": 6555,
+      "n_correct": 348,
+      "precision": 0.05308924485125858,
+      "coverage": 0.12055394122190753,
+      "pool_claims": 54374,
+      "pool_correct": 414,
+      "pool_baseline": 0.007613933129804686
+    },
+    "mistral-large:123b": {
+      "threshold": 4,
+      "n_selected": 5880,
+      "n_correct": 319,
+      "precision": 0.05425170068027211,
+      "coverage": 0.11418362591269225,
+      "pool_claims": 51496,
+      "pool_correct": 377,
+      "pool_baseline": 0.007320956967531459
+    },
+    "mistral:7b": {
+      "threshold": 4,
+      "n_selected": 5490,
+      "n_correct": 340,
+      "precision": 0.061930783242258654,
+      "coverage": 0.14085229750878722,
+      "pool_claims": 38977,
+      "pool_correct": 412,
+      "pool_baseline": 0.010570336352207712
+    },
+    "mixtral:8x7b": {
+      "threshold": 4,
+      "n_selected": 6396,
+      "n_correct": 343,
+      "precision": 0.05362726704190119,
+      "coverage": 0.12782285463048085,
+      "pool_claims": 50038,
+      "pool_correct": 406,
+      "pool_baseline": 0.008113833486550221
+    },
+    "qwen2.5:72b": {
+      "threshold": 4,
+      "n_selected": 6073,
+      "n_correct": 332,
+      "precision": 0.05466820352379384,
+      "coverage": 0.11225093342205464,
+      "pool_claims": 54102,
+      "pool_correct": 409,
+      "pool_baseline": 0.007559794462311929
+    }
+  },
+  "lookup_check": {
+    "lookup_entries": 60585,
+    "rebuilt_entries": 60585,
+    "identical": true,
+    "n_key_or_score_mismatches": 0
+  },
+  "inference_accounting": {
+    "per_model": {
+      "google/gemma-4-31b": {
+        "calls": 2916,
+        "prompt_tokens": 801972,
+        "completion_tokens": 503524
+      },
+      "mistral-large:123b": {
+        "calls": 2916,
+        "prompt_tokens": 962040,
+        "completion_tokens": 880378
+      },
+      "mistral:7b": {
+        "calls": 2916,
+        "prompt_tokens": 962040,
+        "completion_tokens": 1027565
+      },
+      "mixtral:8x7b": {
+        "calls": 2916,
+        "prompt_tokens": 976620,
+        "completion_tokens": 567216
+      },
+      "qwen2.5:72b": {
+        "calls": 2916,
+        "prompt_tokens": 890961,
+        "completion_tokens": 765469
+      }
+    },
+    "total": {
+      "calls": 14580,
+      "prompt_tokens": 4593633,
+      "completion_tokens": 3744152,
+      "calls_per_protein": 60.0
+    }
+  }
+}

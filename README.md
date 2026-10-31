@@ -30,7 +30,7 @@ The reliability score combines three signals already observable at inference tim
 |---|---|
 | 1 | Primary 10%-coverage precision: **4.78%** vs. **0.70%** baseline (+4.08 pp, 95% CI [+3.71, +4.47]) on 243 held-out proteins |
 | 2 | Precision increases with the frozen score across its full range (0.09% at score 2 → 38.28% at score 14), not strictly monotonic at every individual value |
-| 3 | Leave-one-model-out: removing any single one of the five frozen models never drops precision below 4.78%; cross-model agreement is the strongest individual component evaluated (not an orthogonal/causal decomposition) |
+| 3 | Leave-one-model-out: removing any single one of the five frozen models never drops precision below 4.78%, so no single model is solely responsible for the result; each reduced ensemble has a smaller claim pool with a higher baseline, so this does not show that four models outperform five or that fewer models suffice. Cross-model agreement is the strongest individual component evaluated (not an orthogonal/causal decomposition); the full score is not the highest-precision configuration evaluated (`n_models` + `rago_support`: 5.09%) |
 | 4 | GPT-5.5 (never used to build the score): cumulative precision 14.85%–42.48% across the same score thresholds, among the 2,410 overlapping claims |
 | 5 | Held-out cohort is substantially sparser in experimental GO annotation than the development benchmark (mean 3.84 vs. 7.67 terms/protein, Cohen's *d* = −0.645) — reported as a property of the validation design |
 
@@ -65,7 +65,15 @@ ramp/
 │   ├── decompose_rag_unmatched.py      # Diagnostic decomposition of unmatched RAG candidates
 │   ├── temporal_holdout_rag.py         # Temporal-holdout style checks
 │   ├── llm_prompting_heldout.py        # Primary 5-model inference on the held-out cohort (P1–P4)
+│   ├── primary_analysis.py             # Frozen score, primary endpoint, paired bootstrap, ablations, leave-one-model-out (from raw responses)
+│   ├── cohort_comparison.py            # Held-out vs. development cohort characteristics
+│   ├── development_reference.py        # Development-set reference value (needs PROBE probe_results/)
 │   └── llm_prompting_rag.py            # RAG-augmented inference variant
+│
+├── primary_analysis/
+│   ├── primary_analysis_report.json    # Output of scripts/primary_analysis.py
+│   ├── cohort_comparison_report.json   # Output of scripts/cohort_comparison.py
+│   └── development_reference_report.json # Output of scripts/development_reference.py
 │
 ├── heldout_results/                    # Raw primary-model responses (JSONL, one file per model)
 │   ├── mistral-large-123b.jsonl
@@ -207,12 +215,28 @@ python scripts/llm_prompting_heldout.py
 ```
 Requires a MindRouter-compatible endpoint; see `scripts/llm_prompting_heldout.py` for configuration. 14,580 calls (243 proteins x 3 namespaces x 5 models x 4 prompts).
 
-### Step 4 — RAG/BLAST-support evaluation
+### Step 4 — Primary analysis (frozen score, primary endpoint, robustness analyses)
+```bash
+python scripts/primary_analysis.py
+```
+Reads only files already in this repository (`heldout_results/*.jsonl`, `heldout_benchmark_243.json`, `scripts/heldout_sample_250.json`, `heldout_rag_candidates.json`); makes no LLM call, BLAST search, or network request. Computes the frozen score, precision at 10%-coverage under the whole-score-group rule, the 100%-coverage baseline, the paired protein-level bootstrap (B = 2,000, seed 42), the per-score table, organism and namespace breakdowns, component ablations, and leave-one-model-out (with each reduced pool's size and baseline). It also checks that the read-only claim→score lookup used by every external-validation analysis is identical to the score rebuilt from raw responses, and reports the concentration-across-proteins statistics, the exact-10% tie-breaking sensitivity value (descriptive only), and aggregate call and token counts. Output: `primary_analysis/primary_analysis_report.json`.
+
+```bash
+python scripts/cohort_comparison.py
+```
+Held-out vs. development cohort characteristics (manuscript Table 5; requires `scipy`). Output: `primary_analysis/cohort_comparison_report.json`.
+
+```bash
+python scripts/development_reference.py --probe-results /path/to/PROBE/probe_results
+```
+Development-set reference value (0.0595, 95% CI [0.0563, 0.0631]; B = 1,000, as recorded in `FROZEN_PROTOCOL.md`) and the development-set leave-one-model-out check, from the PROBE development responses (https://github.com/utpoln/PROBE). Output: `primary_analysis/development_reference_report.json`.
+
+### Step 5 — RAG/BLAST-support evaluation
 ```bash
 python scripts/evaluate_rag.py
 ```
 
-### Step 5 — External model-family validation (GPT-5.5)
+### Step 6 — External model-family validation (GPT-5.5)
 ```bash
 cd openai_external_validation
 python openai_prompting_heldout.py
@@ -221,7 +245,7 @@ python analysis/final_analysis.py
 ```
 Requires `OPENAI_API_KEY` as an environment variable — never pass API keys on the command line or hardcode them. See `openai_external_validation/README.md` and `OPENAI_EXTERNAL_PROTOCOL.md` for the full protocol, including a methodological finding on reasoning-token budget exhaustion during early pilot runs.
 
-All raw results (`heldout_results/*.jsonl`, `openai_external_validation/raw/*.jsonl`) and the full frozen-protocol audit trail are included so the primary and external-validation results can be re-derived directly from source without re-running inference.
+All raw results (`heldout_results/*.jsonl`, `openai_external_validation/raw/*.jsonl`, `external_validation/<model>/*.jsonl`) and the full frozen-protocol audit trail are included so the primary and external-validation results can be re-derived directly from source without re-running inference. See [`reproducibility/README.md`](reproducibility/README.md) for exactly which reported values each script regenerates and which are not covered by a released script.
 
 ---
 
