@@ -1,0 +1,496 @@
+{
+ "V1_primary": {
+  "n": 7431,
+  "c": 355,
+  "N": 60585,
+  "base_c": 423
+ },
+ "V2_namespace_primary": {
+  "molecular_function": {
+   "sel_n": 2098,
+   "sel_c": 38,
+   "prec": 0.01811248808388942,
+   "prec_ci": [
+    0.01218883419649903,
+    0.024320747878648886
+   ],
+   "all_n": 17673,
+   "all_c": 45,
+   "base": 0.002546257002206756,
+   "base_ci": [
+    0.001802487766655498,
+    0.003315453197027031
+   ]
+  },
+  "biological_process": {
+   "sel_n": 3086,
+   "sel_c": 47,
+   "prec": 0.0152300712896954,
+   "prec_ci": [
+    0.010748587622849233,
+    0.01990062340121256
+   ],
+   "all_n": 27551,
+   "all_c": 76,
+   "base": 0.002758520561867083,
+   "base_ci": [
+    0.002022649083355543,
+    0.0035508155124556683
+   ]
+  },
+  "cellular_component": {
+   "sel_n": 2247,
+   "sel_c": 270,
+   "prec": 0.12016021361815754,
+   "prec_ci": [
+    0.10813097356380275,
+    0.13289195102374746
+   ],
+   "all_n": 15361,
+   "all_c": 302,
+   "base": 0.01966017837380379,
+   "base_ci": [
+    0.01781664739978088,
+    0.021586190087956498
+   ]
+  }
+ },
+ "V3_truncation_proxy": {
+  "responses": 14580,
+  "capped": 2359,
+  "capped_by_model": {
+   "google/gemma-4-31b": 89,
+   "mistral-large:123b": 839,
+   "mistral:7b": 865,
+   "mixtral:8x7b": 50,
+   "qwen2.5:72b": 516
+  },
+  "claims_without_capped": 41437,
+  "base": 0.009653208485170258,
+  "wg10": {
+   "thr": 4.0,
+   "n": 5229,
+   "c": 339,
+   "prec": 0.06483075157773953,
+   "cov": 0.1261915679223882
+  }
+ },
+ "V4_score_cells": {
+  "8": {
+   "M1P2R1": [
+    92,
+    6
+   ],
+   "M2P1R1": [
+    50,
+    8
+   ],
+   "M4P4R0": [
+    241,
+    24
+   ],
+   "M5P3R0": [
+    74,
+    4
+   ]
+  },
+  "9": {
+   "M1P3R1": [
+    24,
+    4
+   ],
+   "M2P2R1": [
+    69,
+    11
+   ],
+   "M3P1R1": [
+    18,
+    2
+   ],
+   "M5P4R0": [
+    247,
+    47
+   ]
+  },
+  "10": {
+   "M1P4R1": [
+    17,
+    3
+   ],
+   "M2P3R1": [
+    52,
+    4
+   ],
+   "M3P2R1": [
+    35,
+    5
+   ],
+   "M4P1R1": [
+    1,
+    0
+   ]
+  },
+  "11": {
+   "M2P4R1": [
+    34,
+    7
+   ],
+   "M3P3R1": [
+    40,
+    4
+   ],
+   "M4P2R1": [
+    10,
+    1
+   ],
+   "M5P1R1": [
+    1,
+    1
+   ]
+  },
+  "12": {
+   "M3P4R1": [
+    71,
+    16
+   ],
+   "M4P3R1": [
+    39,
+    11
+   ],
+   "M5P2R1": [
+    1,
+    0
+   ]
+  },
+  "13": {
+   "M4P4R1": [
+    96,
+    22
+   ],
+   "M5P3R1": [
+    15,
+    3
+   ]
+  },
+  "14": {
+   "M5P4R1": [
+    128,
+    49
+   ]
+  }
+ },
+ "V5_external_overlap_conditioned": {
+  "gpt-5.5": {
+   "responses": 2916,
+   "claims": 4801,
+   "correct": 561,
+   "overlap_n": 2410,
+   "overlap_c": 358,
+   "nonoverlap_n": 2391,
+   "nonoverlap_c": 203,
+   "proteins_with_claims": 243,
+   "S>=9": {
+    "n": 636,
+    "c": 181,
+    "prec": 0.28459119496855345,
+    "diff_vs_overlap_base_pp": 13.60434771262298,
+    "diff_vs_overlap_ci_pp": [
+     11.124621896738192,
+     16.15273896688431
+    ],
+    "diff_vs_overall_pp": 16.77405388552437,
+    "diff_vs_overall_ci_pp": [
+     14.015970789046367,
+     19.636822224165023
+    ],
+    "reps_used": 2000
+   },
+   "S>=14": {
+    "n": 113,
+    "c": 48,
+    "prec": 0.4247787610619469,
+    "diff_vs_overlap_base_pp": 27.623104321962323,
+    "diff_vs_overlap_ci_pp": [
+     19.072084494725914,
+     36.76907555684831
+    ],
+    "diff_vs_overall_pp": 30.792810494863716,
+    "diff_vs_overall_ci_pp": [
+     21.969631697535675,
+     39.91136320253412
+    ],
+    "reps_used": 2000
+   }
+  },
+  "llama3.3-70b": {
+   "responses": 2916,
+   "claims": 12658,
+   "correct": 327,
+   "overlap_n": 3277,
+   "overlap_c": 268,
+   "nonoverlap_n": 9381,
+   "nonoverlap_c": 59,
+   "proteins_with_claims": 243,
+   "S>=9": {
+    "n": 578,
+    "c": 145,
+    "prec": 0.2508650519031142,
+    "diff_vs_overlap_base_pp": 16.9082934112452,
+    "diff_vs_overlap_ci_pp": [
+     14.364401702135671,
+     19.692598491196815
+    ],
+    "diff_vs_overall_pp": 22.503158690074414,
+    "diff_vs_overall_ci_pp": [
+     19.62493557659835,
+     25.537626159352744
+    ],
+    "reps_used": 2000
+   },
+   "S>=14": {
+    "n": 113,
+    "c": 42,
+    "prec": 0.37168141592920356,
+    "diff_vs_overlap_base_pp": 28.989929813854136,
+    "diff_vs_overlap_ci_pp": [
+     20.552247936725408,
+     38.33803049991686
+    ],
+    "diff_vs_overall_pp": 34.58479509268335,
+    "diff_vs_overall_ci_pp": [
+     26.032821220750456,
+     43.90660629851644
+    ],
+    "reps_used": 2000
+   }
+  },
+  "qwen3-32b": {
+   "responses": 2916,
+   "claims": 13847,
+   "correct": 312,
+   "overlap_n": 5265,
+   "overlap_c": 298,
+   "nonoverlap_n": 8582,
+   "nonoverlap_c": 14,
+   "proteins_with_claims": 243,
+   "S>=9": {
+    "n": 717,
+    "c": 171,
+    "prec": 0.2384937238493724,
+    "diff_vs_overlap_base_pp": 18.189353391584913,
+    "diff_vs_overlap_ci_pp": [
+     15.83543334508349,
+     20.65158444585495
+    ],
+    "diff_vs_overall_pp": 21.596176746892898,
+    "diff_vs_overall_ci_pp": [
+     19.04607222564963,
+     24.21599534292775
+    ],
+    "reps_used": 2000
+   },
+   "S>=14": {
+    "n": 123,
+    "c": 47,
+    "prec": 0.3821138211382114,
+    "diff_vs_overlap_base_pp": 32.551363120468814,
+    "diff_vs_overlap_ci_pp": [
+     24.540159142117464,
+     41.03200937467481
+    ],
+    "diff_vs_overall_pp": 35.9581864757768,
+    "diff_vs_overall_ci_pp": [
+     27.824617012508646,
+     44.65307952829918
+    ],
+    "reps_used": 2000
+   }
+  },
+  "gemma3-12b": {
+   "responses": 2916,
+   "claims": 12865,
+   "correct": 155,
+   "overlap_n": 2141,
+   "overlap_c": 149,
+   "nonoverlap_n": 10724,
+   "nonoverlap_c": 6,
+   "proteins_with_claims": 243,
+   "S>=9": {
+    "n": 400,
+    "c": 98,
+    "prec": 0.245,
+    "diff_vs_overlap_base_pp": 17.54063521718823,
+    "diff_vs_overlap_ci_pp": [
+     14.272883166718586,
+     20.920334644708362
+    ],
+    "diff_vs_overall_pp": 23.295180722891565,
+    "diff_vs_overall_ci_pp": [
+     19.5963498437983,
+     27.217676099732607
+    ],
+    "reps_used": 2000
+   },
+   "S>=14": {
+    "n": 76,
+    "c": 28,
+    "prec": 0.3684210526315789,
+    "diff_vs_overlap_base_pp": 29.882740480346122,
+    "diff_vs_overlap_ci_pp": [
+     20.613490881504372,
+     40.074396123956966
+    ],
+    "diff_vs_overall_pp": 35.63728598604946,
+    "diff_vs_overall_ci_pp": [
+     26.021708948961304,
+     45.892144501502756
+    ],
+    "reps_used": 2000
+   }
+  },
+  "gpt-oss-120b": {
+   "responses": 2916,
+   "claims": 10533,
+   "correct": 387,
+   "overlap_n": 4176,
+   "overlap_c": 326,
+   "nonoverlap_n": 6357,
+   "nonoverlap_c": 61,
+   "proteins_with_claims": 243,
+   "S>=9": {
+    "n": 694,
+    "c": 176,
+    "prec": 0.25360230547550433,
+    "diff_vs_overlap_base_pp": 17.553717137588748,
+    "diff_vs_overlap_ci_pp": [
+     15.074188321006341,
+     20.05187122926596
+    ],
+    "diff_vs_overall_pp": 21.686063643534485,
+    "diff_vs_overall_ci_pp": [
+     19.004865089387245,
+     24.444463950126398
+    ],
+    "reps_used": 2000
+   },
+   "S>=14": {
+    "n": 120,
+    "c": 48,
+    "prec": 0.4,
+    "diff_vs_overlap_base_pp": 32.19348659003832,
+    "diff_vs_overlap_ci_pp": [
+     23.824444467240223,
+     41.1774421421399
+    ],
+    "diff_vs_overall_pp": 36.32583309598405,
+    "diff_vs_overall_ci_pp": [
+     27.95141654040776,
+     45.474552765210746
+    ],
+    "reps_used": 2000
+   }
+  }
+ },
+ "V6_external_ensemble": {
+  "claims": 45054,
+  "correct": 638,
+  "base": 0.014160784835974608,
+  "proteins": 243,
+  "point": {
+   "thr": 5.0,
+   "n": 4878,
+   "c": 531,
+   "prec": 0.1088560885608856,
+   "cov": 0.1082700759089093
+  },
+  "diff_point_pp": 9.4695303724911,
+  "diff_ci_pp_rethresholded": [
+   8.710251158094955,
+   10.22341592621514
+  ],
+  "prec_ci_rethresholded": [
+   10.053387371595816,
+   11.705127636582523
+  ],
+  "thresholds_chosen_across_reps": {
+   "5.0": 1999,
+   "4.0": 1
+  },
+  "coverage_range": [
+   0.10098778268780868,
+   0.15737774477564442
+  ],
+  "diff_ci_pp_fixed_threshold": [
+   8.710651753204122,
+   10.22341592621514
+  ],
+  "overlap_with_frozen_claims": 9585,
+  "note": "different seed stream from audit_v3 (same seed 42, replicates drawn over all 243 accessions)"
+ },
+ "V6b_subensemble_never_in_dev_benchmark": {
+  "models": [
+   "gpt-5.5",
+   "gpt-oss-120b"
+  ],
+  "claims": 12906,
+  "base": 0.046180071284673795,
+  "wg10": {
+   "thr": 6.0,
+   "n": 1963,
+   "c": 393,
+   "prec": 0.20020376974019358,
+   "cov": 0.15209979854331318
+  },
+  "diff_point_pp": 15.402369845551977,
+  "diff_ci_pp": [
+   13.918528218856578,
+   17.292543513902352
+  ]
+ },
+ "V6b_subensemble_in_dev_benchmark": {
+  "models": [
+   "gemma3-12b",
+   "llama3.3-70b",
+   "qwen3-32b"
+  ],
+  "claims": 36207,
+  "base": 0.011848537575606926,
+  "wg10": {
+   "thr": 4.0,
+   "n": 4723,
+   "c": 357,
+   "prec": 0.07558755028583528,
+   "cov": 0.13044438920650703
+  },
+  "diff_point_pp": 6.373901271022834,
+  "diff_ci_pp": [
+   5.776419911774449,
+   6.956560842025976
+  ]
+ },
+ "V7_dev_10model": {
+  "models": [
+   "Qwen_Qwen3-32B",
+   "gemma3-12b",
+   "google_gemma-4-31b",
+   "llama3.1-8b",
+   "llama3.3-70b",
+   "mistral-7b",
+   "mistral-large-123b",
+   "mixtral-8x7b",
+   "qwen2.5-72b",
+   "qwen2.5-7b"
+  ],
+  "claims": 394101,
+  "base": 0.007515839848160751,
+  "exact10_expected": 0.05864283617457923,
+  "exact1_expected": 0.24963985863516808,
+  "wg10": {
+   "thr": 4.0,
+   "n": 49289,
+   "c": 2385,
+   "prec": 0.048388078475927694,
+   "cov": 0.12506692446860068
+  }
+ }
+}

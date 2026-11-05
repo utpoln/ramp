@@ -1,0 +1,16 @@
+{
+ "proteins": 243,
+ "tied_top_claims": 384,
+ "correct": 121,
+ "pooled": 0.3151041666666667,
+ "pooled_ci": [
+  0.2727217429772174,
+  0.3608835683033544
+ ],
+ "mean_over_proteins": 0.3660493827160493,
+ "mean_ci": [
+  0.31206618655692736,
+  0.42126886145404663
+ ],
+ "random_pick_baseline_mean_over_proteins": 0.0071386810806948
+}

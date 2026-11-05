@@ -1,0 +1,125 @@
+{
+ "A_ramp_vs_frequency": {
+  "10pct": {
+   "budget_claims": 6059,
+   "ramp_expected_supported": 345.7237604636188,
+   "freq_expected_supported": 329.0,
+   "ramp_precision": 0.05705954125492966,
+   "freq_precision": 0.05429938933817462,
+   "ramp_precision_ci": [
+    0.0518748702674642,
+    0.06230180743710956
+   ],
+   "freq_precision_ci": [
+    0.04934386767062754,
+    0.05955966732839555
+   ],
+   "diff_pp": 0.2760151916755045,
+   "diff_ci_pp": [
+    -0.05365411313799449,
+    0.6264147828812991
+   ],
+   "additional_supported_claims_ramp": 16.723760463618817,
+   "share_reps_ramp_higher": 0.944
+  },
+  "20pct": {
+   "budget_claims": 12117,
+   "ramp_expected_supported": 370.32975660821774,
+   "freq_expected_supported": 375.5394736842105,
+   "ramp_precision": 0.030562825502039922,
+   "freq_precision": 0.030992776568805027,
+   "ramp_precision_ci": [
+    0.027888263487731615,
+    0.0333158193099387
+   ],
+   "freq_precision_ci": [
+    0.028084390923167814,
+    0.033814244647722445
+   ],
+   "diff_pp": -0.04299510667651056,
+   "diff_ci_pp": [
+    -0.18069755736660878,
+    0.10911325814124656
+   ],
+   "additional_supported_claims_ramp": -5.209717075992785,
+   "share_reps_ramp_higher": 0.2845
+  }
+ },
+ "A_settings": {
+  "N_claims": 60585,
+  "proteins": 243,
+  "B": 2000,
+  "seed": 42,
+  "tie_rule": "expected value at boundary group, both rankings",
+  "frequency_source": "pool_go_lookup.json (ADAPT 25,460-protein pool, experimental evidence codes)"
+ },
+ "S5_validity_by_band": {
+  "2-2": {
+   "valid": 25128,
+   "wrong_namespace": 8631,
+   "obsolete": 6985,
+   "alt_id": 4118,
+   "nonexistent": 650
+  },
+  "3-4": {
+   "valid": 7533,
+   "wrong_namespace": 968,
+   "obsolete": 1290,
+   "alt_id": 869,
+   "nonexistent": 88
+  },
+  "5-8": {
+   "valid": 3016,
+   "wrong_namespace": 73,
+   "obsolete": 138,
+   "alt_id": 198,
+   "nonexistent": 2
+  },
+  "9-14": {
+   "valid": 890,
+   "wrong_namespace": 0,
+   "obsolete": 7,
+   "alt_id": 1,
+   "nonexistent": 0
+  }
+ },
+ "S5_validity_totals": {
+  "wrong_namespace": 9672,
+  "valid": 36567,
+  "obsolete": 8420,
+  "alt_id": 5186,
+  "nonexistent": 740
+ },
+ "S4_gpt55_threshold_cis": {
+  "S>=9": {
+   "n": 636,
+   "c": 181,
+   "point": 0.28459119496855345,
+   "ci": [
+    0.2539432176656151,
+    0.31711592911073827
+   ],
+   "n_proteins": 214
+  },
+  "S>=12": {
+   "n": 294,
+   "c": 99,
+   "point": 0.336734693877551,
+   "ci": [
+    0.2895600744284955,
+    0.3860508076181291
+   ],
+   "n_proteins": 140
+  },
+  "S>=14": {
+   "n": 113,
+   "c": 48,
+   "point": 0.4247787610619469,
+   "ci": [
+    0.33897954895643645,
+    0.5140253671562082
+   ],
+   "n_proteins": 90
+  }
+ }
+}
