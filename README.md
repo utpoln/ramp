@@ -1,7 +1,7 @@
 # RAMP: A Frozen Multi-Signal Reliability Framework for Prioritizing LLM-Generated Gene Ontology Annotations
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![Status: manuscript in preparation](https://img.shields.io/badge/status-manuscript%20in%20preparation-orange.svg)](#)
 
 > **Kallol Naha, Hasan Jamil**
@@ -12,13 +12,15 @@
 
 ## Overview
 
-This repository holds the code, frozen protocol, and raw results for a study of whether a **reliability score for LLM-generated Gene Ontology (GO) claims** — built and frozen using only existing development data — generalizes to genuinely unseen proteins, and whether that same frozen ranking transfers to an external model family that played no part in building it.
+This repository holds the code, frozen protocol, and raw results for a study of whether a **reliability score for LLM-generated Gene Ontology (GO) claims**, built and frozen using only existing development data, concentrates experimentally supported claims on proteins excluded from its construction. A panel of five further models, added after the primary result, examines how the frozen ranking behaves on claims that other models also produce.
 
 The reliability score combines three signals already observable at inference time: cross-model agreement (`n_models`), cross-prompt consistency (`max_prompt_consistency`), and homology-based retrieval support (`rago_support`, from BLAST against a frozen candidate pool). All three components, the five models and four prompts used to compute them, and the primary endpoint were fixed and timestamped **before** any prediction was generated on the held-out cohort (see `FROZEN_PROTOCOL.md` / `frozen_experiment_config.json`).
 
-**Primary external validation** (five frozen models, 243 held-out proteins never seen during score construction): at the prespecified top-10%-coverage operating point, precision reached **4.78%** against a **0.70%** unselected baseline — a protein-level paired bootstrap difference of **+4.08 percentage points** (95% CI [+3.71, +4.47]).
+**Primary held-out validation** (the only confirmatory result; five frozen models, 243 held-out proteins excluded from score construction): at the prespecified 10%-coverage operating point, the score selected 7,431 of 60,585 claims (12.27%; tied score groups are not split), with precision **4.78%** against a **0.70% all-claim (100%-coverage) baseline**, a protein-level paired bootstrap difference of **+4.08 percentage points** (95% CI [+3.71, +4.47]).
 
-**External model-family validation** (GPT-5.5, a model that contributed nothing to the score): among the 50.2% of GPT-5.5 claims that matched an existing scored claim, empirical correctness likewise rose with the same frozen score, from 5.41% at the lowest observed score to 42.48% at the highest.
+**Post-hoc analyses** (exploratory, run after the held-out results were known; `scripts/posthoc/`): at matched review budgets, cross-model agreement and homology support carry the ranking and prompt consistency adds no detectable benefit; a ranking of the same claims by GO-term annotation frequency performs comparably (difference at the 10% budget +0.28 pp, 95% CI [−0.05, +0.63]); most supported claims are common cellular-component terms.
+
+**External-model panel** (post hoc; GPT-5.5, Llama 3.3 70B, Qwen3 32B, Gemma3 12B, GPT-oss-120B; none is among the five models used to calculate the frozen score. GPT-5.5 and GPT-oss-120B played no part in development. Llama 3.3 70B, Qwen3 32B and Gemma3 12B are PROBE development-benchmark models whose development responses were involved in exploratory score construction, and Llama 3.3 70B and Gemma3 12B also took part in the pre-freeze retrieval pilot): among each model's claims that the frozen five-model ensemble also produced, higher frozen scores went with higher precision (score ≥ 9: 13.6–18.2 pp above the overlapping subset's own precision). Overlapping claims are already enriched and non-overlapping claims cannot be scored, so this does not show transfer to other models' full output.
 
 > **Note:** The manuscript and LaTeX source will be released upon journal acceptance.
 
@@ -30,9 +32,11 @@ The reliability score combines three signals already observable at inference tim
 |---|---|
 | 1 | Primary 10%-coverage precision: **4.78%** vs. **0.70%** baseline (+4.08 pp, 95% CI [+3.71, +4.47]) on 243 held-out proteins |
 | 2 | Precision increases with the frozen score across its full range (0.09% at score 2 → 38.28% at score 14), not strictly monotonic at every individual value |
-| 3 | Leave-one-model-out: removing any single one of the five frozen models never drops precision below 4.78%, so no single model is solely responsible for the result; each reduced ensemble has a smaller claim pool with a higher baseline, so this does not show that four models outperform five or that fewer models suffice. Cross-model agreement is the strongest individual component evaluated (not an orthogonal/causal decomposition); the full score is not the highest-precision configuration evaluated (`n_models` + `rago_support`: 5.09%) |
-| 4 | GPT-5.5 (never used to build the score): cumulative precision 14.85%–42.48% across the same score thresholds, among the 2,410 overlapping claims |
-| 5 | Held-out cohort is substantially sparser in experimental GO annotation than the development benchmark (mean 3.84 vs. 7.67 terms/protein, Cohen's *d* = −0.645) — reported as a property of the validation design |
+| 3 | Prespecified secondary endpoints (reported after the primary result was known): 21.16% at the 1% coverage target, 7.72% at 5%, 2.52% at 20%; per-protein top-1 31.5% (pooled) |
+| 4 | Leave-one-model-out: removing any one frozen model never drops precision below 4.78% (each reduced ensemble has a smaller pool and higher baseline). Post hoc, at matched budgets: full score − `n_models` +0.52 pp [+0.30, +0.75]; full score − (`n_models` + `rago_support`) +0.01 pp [−0.12, +0.13]. The whole-group component ablations are at different coverages and are not directly comparable |
+| 5 | Post hoc: term-frequency ranking comparable to the score at 10% and 20% budgets, better at 50%; homology candidates alone close at their own budgets; 39.6% of extracted GO identifiers are invalid for their namespace and concentrate at low scores; 270 of 355 supported claims are cellular-component terms |
+| 6 | External-model panel (post hoc, see above): within overlapping claims, cumulative precision 23.85%–28.46% at score ≥ 9 across the five models |
+| 7 | Held-out cohort is substantially sparser in experimental GO annotation than the development benchmark (mean 3.84 vs. 7.67 terms/protein, Cohen's *d* = −0.645) — reported as a property of the validation design |
 
 ---
 
@@ -40,8 +44,9 @@ The reliability score combines three signals already observable at inference tim
 
 ```
 ramp/
-├── FROZEN_PROTOCOL.md                  # Full frozen protocol (timestamped, pre-registered-in-spirit)
-├── frozen_experiment_config.json       # Machine-readable frozen config + file hashes
+├── FROZEN_PROTOCOL.md                  # Full frozen protocol (timestamped; prespecified, not lodged in a public registry; later edited only to rename RAGO -> RAMP, commit c657d0c)
+├── frozen_experiment_config.json       # Machine-readable frozen config + 16-character SHA-256 prefixes for six governed files (BLAST FASTA, GO file, four scripts)
+├── GO_RELEASE_CORRECTION.md            # Correction: GO release label in the two frozen files is 2026-05-19, not 2026-03-25
 │
 ├── benchmark_master.json               # PROBE's 1,000-protein development set (reused, not modified)
 ├── pool_proteins.fasta                 # ADAPT's 25,460-protein candidate pool (BLAST retrieval source)
@@ -52,6 +57,10 @@ ramp/
 ├── heldout_query_proteins.fasta        # Held-out protein sequences (for BLAST)
 ├── heldout_rag_candidates.json         # BLAST retrieval candidates for the held-out cohort
 ├── heldout_blast_hits.tsv              # Raw BLAST hits, held-out cohort
+│
+├── reference_data/
+│   ├── go-basic_2026-05-19.obo         # GO release matching the frozen 16-character SHA-256 hash prefix 923645000afcb1df
+│   └── GO_FILE_VERIFICATION.md         # Source URL, size, full SHA-256, and check against the frozen 16-character prefix
 │
 ├── scripts/
 │   ├── draw_heldout_sample.py          # Held-out cohort sampling (seed=42, full audit log)
@@ -68,7 +77,8 @@ ramp/
 │   ├── primary_analysis.py             # Frozen score, primary endpoint, paired bootstrap, ablations, leave-one-model-out (from raw responses)
 │   ├── cohort_comparison.py            # Held-out vs. development cohort characteristics
 │   ├── development_reference.py        # Development-set reference value (needs PROBE probe_results/)
-│   └── llm_prompting_rag.py            # RAG-augmented inference variant
+│   ├── llm_prompting_rag.py            # RAG-augmented inference variant (pre-freeze pilot)
+│   └── posthoc/                        # POST-HOC exploratory analyses (not in the frozen protocol); run_all.sh, README.md, expected/
 │
 ├── primary_analysis/
 │   ├── primary_analysis_report.json    # Output of scripts/primary_analysis.py
@@ -83,11 +93,11 @@ ramp/
 │   ├── mistral-7b.jsonl
 │   └── run_manifest.json               # Full reproducibility manifest
 │
-├── rag_results/                        # BLAST/RAG-support evaluation outputs (subset of models)
+├── rag_results/                        # Pre-freeze retrieval-selection pilot on 100 development proteins (Mistral Large, Llama 3.3 70B, Gemma3 12B)
 ├── rag_evaluation/
 │   └── rag_leaderboard.json
 │
-├── openai_external_validation/         # External model-family validation (GPT-5.5)
+├── openai_external_validation/         # External-model panel, first stage: GPT-5.5 (post hoc)
 │   ├── README.md                       # Subfolder-specific documentation
 │   ├── OPENAI_EXTERNAL_PROTOCOL.md     # Protocol for this stress test
 │   ├── OPENAI_EXTERNAL_VALIDATION_REPORT.md
@@ -99,7 +109,7 @@ ramp/
 │   ├── production/                     # Production batch submission scripts
 │   └── pilot_cost_optimization/        # Pilot batch-cost study (preceding the full run)
 │
-├── external_validation/                # Four additional external-validation models
+├── external_validation/                # External-model panel, second stage: four open-weight models (post hoc)
 │   ├── run_external_model.py           # Generic runner (reuses the frozen P1-P4 prompt builder)
 │   ├── analyze_external_model.py       # Generic integrity audit + analysis pipeline
 │   ├── qwen3_truncation_sensitivity.py # Qwen3 truncation-sensitivity analysis
@@ -125,14 +135,18 @@ ramp/
 Every markdown document in this repository, linked from here:
 
 - [`FROZEN_PROTOCOL.md`](FROZEN_PROTOCOL.md) — the full frozen protocol for the primary five-model experiment (score definition, held-out eligibility rule, tie-handling rule, bootstrap procedure, timestamps)
-- **External model-family validation (GPT-5.5)**
+- [`GO_RELEASE_CORRECTION.md`](GO_RELEASE_CORRECTION.md) — correction to the GO release label recorded in `FROZEN_PROTOCOL.md` and `frozen_experiment_config.json` (label only; no file, hash, or result changed)
+- **External-model panel (post hoc): GPT-5.5**
   - [`openai_external_validation/README.md`](openai_external_validation/README.md) — subfolder overview
   - [`openai_external_validation/OPENAI_EXTERNAL_PROTOCOL.md`](openai_external_validation/OPENAI_EXTERNAL_PROTOCOL.md) — protocol for the GPT-5.5 stress test
   - [`openai_external_validation/OPENAI_EXTERNAL_VALIDATION_REPORT.md`](openai_external_validation/OPENAI_EXTERNAL_VALIDATION_REPORT.md) — results report
   - [`openai_external_validation/pilot_cost_optimization/PILOT_PROTOCOL.md`](openai_external_validation/pilot_cost_optimization/PILOT_PROTOCOL.md) — pilot batch-cost protocol
   - [`openai_external_validation/pilot_cost_optimization/pilot_report.md`](openai_external_validation/pilot_cost_optimization/pilot_report.md) — pilot results
-- **Additional external-validation models**
+- **External-model panel (post hoc): open-weight models**
   - [`external_validation/command_a_111b/DISCONTINUED.md`](external_validation/command_a_111b/DISCONTINUED.md) — why the Cohere Command-A 111B run was discontinued after a technical pilot (never used as scientific data)
+- **Post-hoc analyses**
+  - [`scripts/posthoc/README.md`](scripts/posthoc/README.md) — inputs, dependencies, and how to reproduce every post-hoc value reported in the manuscript
+  - [`reference_data/GO_FILE_VERIFICATION.md`](reference_data/GO_FILE_VERIFICATION.md) — provenance and hash check of the GO file
 - **Reproducibility**
   - [`reproducibility/README.md`](reproducibility/README.md) — reproducing the analysis from released data vs. regenerating LLM responses, plus the full frozen-artifact index
   - [`reproducibility/ollama.md`](reproducibility/ollama.md) — optional local-inference guidance (Ollama is not required; MindRouter is the backend actually used for every published result)
@@ -159,7 +173,7 @@ The score, the five models, the four prompts, the BLAST database/parameters, the
 
 ### Primary (frozen score, five models, P1–P4)
 
-Selected from PROBE's already-published ten-model leaderboard by a fixed, mechanical rule (ranks 1, 3, 5, 7, 9) applied before any held-out or external-model result was examined:
+Selected from PROBE's published ten-model leaderboard by a fixed, mechanical rule (ranks 1, 3, 5, 7, 9). The rule was adopted after exploratory development analyses that used all ten PROBE models, and recorded in the frozen protocol before any held-out prediction:
 
 | Model | MindRouter identity |
 |---|---|
@@ -171,11 +185,19 @@ Selected from PROBE's already-published ten-model leaderboard by a fixed, mechan
 
 P5 (closed-set candidate selection) is excluded from the frozen score by design — it is structurally different from the open-ended generation task used by P1–P4, and none of the three score components depend on P5 data.
 
-### External model family (not used to build the score)
+### External-model panel (post hoc; none used to compute the score)
 
-| Model | Role |
-|---|---|
-| GPT-5.5 (`gpt-5.5-2026-04-23`) | External validation only; evaluated under the identical frozen score and endpoint on the same 243-protein cohort |
+The panel was not part of the frozen protocol; it was assembled after the primary result, in two stages. Cohere Command-A 111B was selected but discontinued for runtime after a technical pilot and 8 production calls (`external_validation/command_a_111b/DISCONTINUED.md`) and replaced by GPT-oss-120B.
+
+No panel model is one of the five models whose responses are used to calculate the frozen score. Three of them are PROBE development-benchmark models, and their development-set responses were involved in the exploratory construction of the score. Their held-out results are therefore not independent of score development. Separately from that, two of the same three (Llama 3.3 70B and Gemma3 12B) took part in the pre-freeze retrieval pilot on 100 development proteins (`rag_results/`), which evaluated LLM selection from homology-retrieved candidate lists.
+
+| Model | Identifier | Used to calculate the frozen score | PROBE development responses involved in exploratory score construction | Participant in the pre-freeze retrieval pilot (`rag_results/`) |
+|---|---|---|---|---|
+| GPT-5.5 | `gpt-5.5-2026-04-23` | No | No (not a PROBE development model) | No |
+| Llama 3.3 70B | `llama3.3:70b` | No | **Yes** (PROBE development model, rank 2) | **Yes** |
+| Qwen3 32B | `Qwen/Qwen3-32B` | No | **Yes** (PROBE development model, rank 4) | No |
+| Gemma3 12B | `gemma3:12b` | No | **Yes** (PROBE development model, rank 10) | **Yes** |
+| GPT-oss-120B | `openai/gpt-oss-120b` | No | No (not a PROBE development model; same vendor as GPT-5.5) | No |
 
 ---
 
@@ -236,7 +258,7 @@ Development-set reference value (0.0595, 95% CI [0.0563, 0.0631]; B = 1,000, as 
 python scripts/evaluate_rag.py
 ```
 
-### Step 6 — External model-family validation (GPT-5.5)
+### Step 6 — External-model panel, GPT-5.5 (post hoc)
 ```bash
 cd openai_external_validation
 python openai_prompting_heldout.py
@@ -245,7 +267,15 @@ python analysis/final_analysis.py
 ```
 Requires `OPENAI_API_KEY` as an environment variable — never pass API keys on the command line or hardcode them. See `openai_external_validation/README.md` and `OPENAI_EXTERNAL_PROTOCOL.md` for the full protocol, including a methodological finding on reasoning-token budget exhaustion during early pilot runs.
 
-All raw results (`heldout_results/*.jsonl`, `openai_external_validation/raw/*.jsonl`, `external_validation/<model>/*.jsonl`) and the full frozen-protocol audit trail are included so the primary and external-validation results can be re-derived directly from source without re-running inference. See [`reproducibility/README.md`](reproducibility/README.md) for exactly which reported values each script regenerates and which are not covered by a released script.
+### Step 7 — Post-hoc exploratory analyses
+```bash
+git clone https://github.com/utpoln/PROBE.git ../PROBE   # development responses, needed by two scripts
+pip install -r scripts/posthoc/requirements.txt
+bash scripts/posthoc/run_all.sh
+```
+Reproduces every post-hoc value in the manuscript (matched-budget comparisons, baselines, GO-identifier validity, sensitivity analyses, external-model contrasts, Figures 4–6) and checks each output against `scripts/posthoc/expected/`. See [`scripts/posthoc/README.md`](scripts/posthoc/README.md).
+
+All raw results (`heldout_results/*.jsonl`, `openai_external_validation/raw/*.jsonl`, `external_validation/<model>/*.jsonl`) and the full frozen-protocol audit trail are included so the primary and external-model panel (post hoc) results can be re-derived directly from source without re-running inference. See [`reproducibility/README.md`](reproducibility/README.md) for exactly which reported values each script regenerates and which are not covered by a released script.
 
 ---
 
